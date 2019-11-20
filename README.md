@@ -1,6 +1,6 @@
 # Installing a default grav powered website
 
-To start exploring the possibilities of [grav](http://getgrav.com) I recommend to install
+To start exploring the possibilities of [grav](http://getgrav.com) I recommend to
 
 - start from a grav skeleton
 - to user ```docker``` for defining a webserver
@@ -8,9 +8,15 @@ To start exploring the possibilities of [grav](http://getgrav.com) I recommend t
 
 For this example walkthrough I used the grav skeleton [Woo Site](https://github.com/getgrav/grav-skeleton-woo-site) as a starting point. But actually you could take any skeleton as presented at [Grav Skeletons](https://getgrav.org/downloads/skeletons)
 
+## Prerequisites
+
+This walkthrough has been created on a mac, and should more or less be explorable on linux, but I haven't tried it. I also have not tried it running it on a Windows machine. Please feel free to try it also on Windows. I accepts of course also addition and corrections.
+
+What you will definitely need is an installation of docker, primarily the commands ```docker``` and ```docker-compose``` must be available from command line.
+
 ## Create the local environment
 
-You have unpacked the environment, and you are readinng this file. Well done. Nearlly there. In the following I will address the folder where this README is located as ```$PRJ```.
+You have unpacked the environment, and you are reading this file. Well done. Nearly there. In the following I will address the folder where this README is located as ```$PRJ```. If you find somewhere the three-letter acronym ```dta``` is has no other meaning than customize some identifiers, but still trying to keep the meaning of the identifier. ```dtawww```for example stands for "my applications"www-server. You are free to use other identifiers, if it annoys you.
 
 In ```$PRJ``` run
 
@@ -19,11 +25,11 @@ unzip grav-skeleton-woo-site-v1.0.1.zip
 mv grav-skeleton-woo-site www
 ```
 
-Voilà, you have your first grav installation. Althought not yet working, it is there. If you would have now a web-server, running the right version of php, etc. you could just use ```www``` as the webroot folder. We will create the webserver environment by using docker.
+Voilà, you have your first grav installation. Although not yet working, it is there. If you would have now a web-server, running the right version of php, etc. you could just use ```www``` as the webroot folder. We will create the webserver environment by using docker.
 
 ## Creating the webserver and linking to the required webroot
 
-In the following I assume that you have a working docker installation running. Primarily the commands ```docker``` and ```docker-compose``` are available from command line.
+In the following I assume that you have a working docker installation running.
 
 In ```$PRJ``` run
 
@@ -38,7 +44,7 @@ version: '3'
 services:
   www:
      build: .
-     container_name: decyphirwww
+     container_name: dtawww
      restart: always
      ports:
         - "5555:80"
@@ -78,15 +84,15 @@ So far we have a basic installation of a grav-based website. You have to edit in
 Actually you can use a text-editor (I am using Visual Studio Code) to edit the files located for example under ```$PRJ/www/user/pages/01.home/modular.md```
 grav uses markdown pages to define the layout and content of the website.
 
-For a good and convient maintenance of the website a visual admin interface might be beneficial that we will install in the following.
+For a good and convenient maintenance of the website a visual admin interface might be beneficial that we will install in the following.
 
 In ```$PRJ``` run
 
 ```sh
-docker exec -it decyphirwww bash
+docker exec -it dtawww bash
 ```
 
-With this command you literally jump in the running container anmed decyphirwww and you have a bash to perform the next steps
+With this command you literally jump in the running container named dtawww and you have a bash to perform the next steps
 
 In the container perform the following steps:
 
@@ -95,8 +101,6 @@ root@b12c50e6dba7:/var/www/html# cd /var/www/html
 root@b12c50e6dba7:/var/www/html# bin/gpm install admin
 
 GPM Releases Configuration: Stable
-
-
 
 The following dependencies need to be installed...
   |- Package form
@@ -151,15 +155,15 @@ Jump there NOW and create your admin account.
 
 Running a website is a nice thing, running it safely is even better. Grav provides you different means on how to this. My favorite is to use git as version control system and to be able to deploy changes via a simple ```git push``` from your local installation.
 
-However this requires some more configuration. Perhaps it is worth writting an own small tutorial. But for the time being let's cretae a full backup of your webiste the goold, via command line,
+However this requires some more configuration. Perhaps it is worth writing an own small tutorial. But for the time being let's create a full backup of your website with the good old, via command line,
 
 As said we will use the command line. So jump again into the container, if not already there via:
 
 ```sh
-docker exec -it decyphirwww bash
+docker exec -it dtawww bash
 ```
 
-(NOTE: You could also use the admin interface for this purpose. But I like the commandline a little bit more, as I know what I am doing and what I am getting as a result.)
+(NOTE: You could also use the admin interface for this purpose. But I like the command-line a little bit more, as I know what I am doing and what I am getting as a result.)
 
 ```console
 root@b12c50e6dba7:/var/www/html# bin/grav backup
@@ -214,19 +218,23 @@ But hold-on, we have a backup. A fresh backup. So what about running
 $ unzip default_site_backup--20191120110855.zip -d www
 [...]
 $ docker-compose down
-Stopping decyphirwww ... done
-Removing decyphirwww ... done
-Removing network decyphir-www_default
+Stopping dtawww ... done
+Removing dtawww ... done
+Removing network dta-www_default
 $ docker-compose up &
-Creating network "decyphir-www_default" with the default driver
-Creating decyphirwww ... done
-Attaching to decyphirwww
+Creating network "dta-www_default" with the default driver
+Creating dtawww ... done
+Attaching to dtawww
 ```
 
-Hurray. You destroyedgit  and reanimated your complete website.
+Hurray. You destroyed it  and reanimated your complete website.
 
-To double check that everything is up and running, go to [http://localhost:5555/admin](http://localhost:5555/admin) and log in. Yes, you can log in, as the whole website has been backuped, included any users, etc.
+To double check that everything is up and running, go to [http://localhost:5555/admin](http://localhost:5555/admin) and log in. Yes, you can log in, as the whole website has been backup-ed, included any users, etc.
 
-That's is for now. As you see this is not so much of a tutorial on how to *write* your website with grav, but how to get the playground going. As you have also seen, it is very easy to migrate this to a production environment. If you have something like the git-sync up and running, you might conider removing the admin plugin from your site. No login, less security hassles. But this are just my personal considerations.  Given the little experience I have with it, you might come up with completely differently solutions. 
+That's is for now. As you see this is not so much of a tutorial on how to *write* your website with grav, but how to get the playground going. As you have also seen, it is very easy to migrate this to a production environment. If you have something like the git-sync up and running, you might consider removing the admin plugin from your site. No login, less security hassles. But this are just my personal considerations.  Given the little experience I have with it, you might come up with completely differently solutions.
 
 Have a lot of fun, and stay tuned for a second part of this tutorial.
+
+## Warning
+
+While I am describing here detailed steps, I most probably miss the precise description and wording for some of the concepts being applied. In particular I assume this for the whole docker part. Nevertheless it gives a good starting point, if you would like to further explore the possibilities.
