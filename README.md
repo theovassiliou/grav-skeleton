@@ -223,7 +223,7 @@ Creating decyphirwww ... done
 Attaching to decyphirwww
 ```
 
-Hurray. You destroy and reanimated your complete website.
+Hurray. You destroyedgit  and reanimated your complete website.
 
 To double check that everything is up and running, go to [http://localhost:5555/admin](http://localhost:5555/admin) and log in. Yes, you can log in, as the whole website has been backuped, included any users, etc.
 
