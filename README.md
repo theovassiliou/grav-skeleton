@@ -20,9 +20,10 @@ You have unpacked the environment, and you are reading this file. Well done. Nea
 
 In ```$PRJ``` run
 
-```sh
-unzip grav-skeleton-woo-site-v1.0.1.zip
-mv grav-skeleton-woo-site www
+```console
+me@mac# curl -o grav-skeleton-woo-site-v1.0.1.zip -SL https://getgrav.org/download/skeletons/woo-site/1.0.1
+me@mac# unzip grav-skeleton-woo-site-v1.0.1.zip
+me@mac# mv grav-skeleton-woo-site www
 ```
 
 Voilà, you have your first grav installation. Although not yet working, it is there. If you would have now a web-server, running the right version of php, etc. you could just use ```www``` as the webroot folder. We will create the webserver environment by using docker.
@@ -33,8 +34,8 @@ In the following I assume that you have a working docker installation running.
 
 In ```$PRJ``` run
 
-```sh
-docker compose up &
+```console
+me@mac# docker compose up &
 ```
 
 The command ```docker-compose up``` basically "runs" the commands as shown in the file ```docker-compose.yaml```
@@ -88,8 +89,8 @@ For a good and convenient maintenance of the website a visual admin interface mi
 
 In ```$PRJ``` run
 
-```sh
-docker exec -it dtawww bash
+```console
+me@mac# docker exec -it dtawww bash
 ```
 
 With this command you literally jump in the running container named dtawww and you have a bash to perform the next steps
@@ -159,8 +160,8 @@ However this requires some more configuration. Perhaps it is worth writing an ow
 
 As said we will use the command line. So jump again into the container, if not already there via:
 
-```sh
-docker exec -it dtawww bash
+```console
+me@mac# docker exec -it dtawww bash
 ```
 
 (NOTE: You could also use the admin interface for this purpose. But I like the command-line a little bit more, as I know what I am doing and what I am getting as a result.)
@@ -183,7 +184,7 @@ root@b12c50e6dba7:/var/www/html#
 In your local shell in ```$PRJ``` I suggest that you run now
 
 ```console
-cp www/backup/default_site_backup--20191120110855.zip ./
+me@mac# cp www/backup/default_site_backup--20191120110855.zip ./
 $ ls -la
   rwxr-xr-x  the  staff   256 B    Wed Nov 20 12:11:59 2019    ./
   rwxr-xr-x  the  staff   512 B    Wed Nov 20 11:29:19 2019    ../
@@ -200,7 +201,7 @@ $ ls -la
 Are you brave? If yes than do the following in ```$PRJ```
 
 ```console
-$rm -rf www
+me@mac# rm -rf www
 ```
 
 Well, what you just did is to destroy the whole installation of the grav-based website.  Verify this by calling [http://localhost:5555](http://localhost:5555)
@@ -215,13 +216,13 @@ Apache/2.4.38 (Debian) Server at localhost Port 5555
 But hold-on, we have a backup. A fresh backup. So what about running
 
 ```console
-$ unzip default_site_backup--20191120110855.zip -d www
+me@mac# unzip default_site_backup--20191120110855.zip -d www
 [...]
-$ docker-compose down
+me@mac# docker-compose down
 Stopping dtawww ... done
 Removing dtawww ... done
 Removing network dta-www_default
-$ docker-compose up &
+me@mac# docker-compose up &
 Creating network "dta-www_default" with the default driver
 Creating dtawww ... done
 Attaching to dtawww
